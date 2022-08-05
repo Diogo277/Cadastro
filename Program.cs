@@ -7,8 +7,9 @@ namespace teste
     {
         static void Main(string[] args)
         {
+            List<PlanoSaude> planos = new List<PlanoSaude>();
             List<Pessoa> pessoas = new List<Pessoa>();
-            Menu.Carregar(pessoas);
+            Menu.Carregar(pessoas, planos);
         }
     }
 }

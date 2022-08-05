@@ -21,5 +21,14 @@ namespace teste
             }
             else return true;
         }
+        public bool ValidarPlano(List<PlanoSaude> planos, int id){
+            var encontrado = planos.Find(x => x.Id == id);
+            if (encontrado != null){
+                Console.WriteLine($"Id já existente");
+                return false;
+            }
+            else return true;
+        }
+    
     }
 }

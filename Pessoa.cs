@@ -8,16 +8,20 @@ namespace teste
     {
         public string Idade {get; set;}
         public string Nome{get; set;}
+        public DateTime DataCadastro {get; set;}
+        public PlanoSaude Plano {get; set;}
 
         
-        public Pessoa(string idade, string nome){
+        public Pessoa(string idade, string nome, PlanoSaude plano){
             Idade = idade;
             Nome = nome;
+            Plano = plano;
+
         }
         public Pessoa(){
 
         }
-        public static void Cadastrar(List<Pessoa> pessoas)
+        public static void Cadastrar(List<Pessoa> pessoas, List<PlanoSaude> planos)
         {
             Erros erro = new Erros();
             Pessoa pessoa = new Pessoa();
@@ -29,22 +33,31 @@ namespace teste
 
             Console.Write("Idade do participante: ");
             pessoa.Idade =  Console.ReadLine();
+            if(planos.Count > 0){
+                foreach(var batata in planos){
+                                Console.WriteLine($"Id do plano: {batata.Id}, nome do plano: {batata.Nome}");
+                            
+                            Console.Write("Qual plano deseja cadastrar o participante? ");
+                            int codigo = Convert.ToInt32(Console.ReadLine());
 
-            if (erro.ValidarPessoa(pessoa.Nome, pessoa.Idade)){
-                pessoas.Add(pessoa);
-                Console.WriteLine("Cadastro realizado com sucesso");
-            } 
-            else Console.WriteLine("Pessoa inválida! Cadastro cancelado");
-
-            Menu.Carregar(pessoas);
-
+                            var encontrado = planos.Find(x => x.Id == codigo);
+                            if(encontrado != null){
+                                pessoa.Plano = encontrado;
+                                pessoa.DataCadastro = DateTime.Now;
+                                pessoas.Add(pessoa);
+                                Console.WriteLine("Cadastro realizado com sucesso");
+                            }
+                            else Console.WriteLine("Plano não encontrado");
+                            
+                }
+            } else Console.WriteLine("Cadastre um plano primeiro!");
+            
         }
 
         public static void Exibir(List<Pessoa> pessoas){
             foreach(var batata in pessoas){
-                Console.WriteLine($"Nome do participante: {batata.Nome}, idade: {batata.Idade}");
+                Console.WriteLine($"Nome do participante: {batata.Nome}, idade: {batata.Idade}, data de cadastro: {batata.DataCadastro}, plano de saúde: {batata.Plano.Id}");
             }
-            Menu.Carregar(pessoas);
         } 
 
         public static void Remover(List<Pessoa> pessoas){
@@ -58,7 +71,6 @@ namespace teste
             } 
             else Console.WriteLine("Pessoa não encontrada");
 
-            Menu.Carregar(pessoas);
         }           
        
     }
