@@ -33,24 +33,27 @@ namespace teste
 
             Console.Write("Idade do participante: ");
             pessoa.Idade =  Console.ReadLine();
-            if(planos.Count > 0){
-                foreach(var batata in planos){
-                                Console.WriteLine($"Id do plano: {batata.Id}, nome do plano: {batata.Nome}");
-                            
-                            Console.Write("Qual plano deseja cadastrar o participante? ");
-                            int codigo = Convert.ToInt32(Console.ReadLine());
 
-                            var encontrado = planos.Find(x => x.Id == codigo);
-                            if(encontrado != null){
-                                pessoa.Plano = encontrado;
-                                pessoa.DataCadastro = DateTime.Now;
-                                pessoas.Add(pessoa);
-                                Console.WriteLine("Cadastro realizado com sucesso");
-                            }
-                            else Console.WriteLine("Plano não encontrado");
-                            
-                }
-            } else Console.WriteLine("Cadastre um plano primeiro!");
+            if(erro.ValidarPessoa(pessoa.Nome, pessoa.Idade)){
+                if(planos.Count > 0){
+                    foreach(var batata in planos){
+                        Console.WriteLine($"Id do plano: {batata.Id}, nome do plano: {batata.Nome}");
+                    }
+                    Console.Write("Qual plano deseja cadastrar o participante? ");
+                    string codigo_ = Console.ReadLine();
+                    if(erro.ValidarCodigo(codigo_)){
+                        int codigo = Convert.ToInt32(codigo_);
+                        var encontrado = planos.Find(x => x.Id == codigo);
+                        if(encontrado != null){
+                            pessoa.Plano = encontrado;
+                            pessoa.DataCadastro = DateTime.Now;
+                            pessoas.Add(pessoa);
+                            Console.WriteLine("Cadastro realizado com sucesso");
+                        } else Console.WriteLine("Plano não encontrado");
+                    }
+                } else Console.WriteLine("Cadastre um plano primeiro!");
+            } else Console.WriteLine("Cadastro cancelado!");
+                
             
         }
 

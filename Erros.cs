@@ -21,13 +21,35 @@ namespace teste
             }
             else return true;
         }
-        public bool ValidarPlano(List<PlanoSaude> planos, int id){
+        public bool ValidarIdPlano(List<PlanoSaude> planos, int id){
             var encontrado = planos.Find(x => x.Id == id);
             if (encontrado != null){
                 Console.WriteLine($"Id já existente");
                 return false;
             }
             else return true;
+        }
+        public bool ValidarPlano(string nome, string codigo){
+            if ((nome == "" || nome == null) && (codigo == null || codigo == "")){
+                Console.WriteLine("Nenhum campo foi preenchido, cadastro cancelado!");
+                return false;
+            }
+            else if (codigo == null || codigo == ""){
+                Console.WriteLine("código inválido!");
+                return false;
+            }
+            else if (nome == null || nome == ""){
+                Console.WriteLine("Nome inválido!");
+                return false;
+            }
+            else return true;          
+        }
+
+        public bool ValidarCodigo(string codigo){
+            if (codigo == null || codigo == ""){
+                Console.WriteLine("digite um código!");
+                return false;
+            } else return true;
         }
     
     }

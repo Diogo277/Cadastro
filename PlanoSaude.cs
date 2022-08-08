@@ -25,15 +25,20 @@ namespace teste
             Console.WriteLine("Cadastro de plano");
 
             Console.Write("Número do plano: ");
-            plano.Id = Convert.ToInt32(Console.ReadLine());
+            string codigo = Console.ReadLine();
 
             Console.Write("Nome do plano: ");
             plano.Nome =  Console.ReadLine();
-            if(erro.ValidarPlano(planos, plano.Id)){
-                planos.Add(plano);
-                Console.WriteLine("Cadastro realizado com sucesso");
-            }
-            else Console.WriteLine("Cadastro cancelado!");
+
+            if(erro.ValidarPlano(plano.Nome, codigo)){
+                plano.Id = Convert.ToInt32(codigo);
+
+            
+                if(erro.ValidarIdPlano(planos, plano.Id)){
+                    planos.Add(plano);
+                    Console.WriteLine("Cadastro realizado com sucesso");
+                }
+            } else Console.WriteLine("Cadastro cancelado!");
         }
         public static void Exibir(List<PlanoSaude> planos){
             foreach(var batata in planos){
